@@ -1,0 +1,31 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: article
+  cloud:
+    consul:
+      discovery:
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        health-check-critical-timeout: 20s
+        instance-id: ${spring.application.name}
+        service-name: articles
+        prefer-ip-address: true
+      config:
+        fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config
+        format: yaml
+        profile-separator: '-'
+        watch:
+          enabled: false
+        enabled: false
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:9000/oauth/token_key
+    client:
+      client-id: talk2amareswaran
+      client-secret: talk2amareswaran@123
